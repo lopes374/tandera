@@ -6,6 +6,7 @@
 
 package com.tandera.controle;
 
+import com.tandera.dao.DaoHelper;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,11 +26,16 @@ public class ConectaBanco {
     private String usuario = "postgres";
     private String senha = "101530";
     public Connection conn;// responsável por realizar a conexão com o banco de dados
+    private DaoHelper dao;
+    
+    ConectaBanco(){
+        dao = new DaoHelper();
+    }
 
     public void conexao(){//método responsavel por realizar a conexão com o banco
         try {// tentativa inicial
-            System.setProperty("jdbc.Drivers", driver);// seta a propriedade do driver de conexão
-            conn= DriverManager.getConnection(caminho, usuario, senha);// realiza a conexão com o banco de dados
+            
+            conn = dao.getConnection();
         } catch (SQLException ex) {//excessão
             JOptionPane.showMessageDialog(null, "Erro de conexão!\n Erro:" + ex.getMessage());
         }
